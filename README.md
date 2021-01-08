@@ -8,7 +8,7 @@ A observer pattern implementation for Unity based on Coroutine.
 # Usage
 `UpdateHub` itself does nothing, it relies on external class (ex: MonoBehaviour) to call its `Update` and `FixedUpdate`.
 
-`UpdateHub` belonging to other classes is intended for separation of concerns. If you want something global/singleton, you can just attach it to other class which is  global/singleton.
+`UpdateHub` belonging to other classes is intended for separation of concerns. If you want something global/singleton, you can just attach it to a global/singleton.
 
 ### To get called every **Update**
 ```csharp
