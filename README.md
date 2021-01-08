@@ -6,7 +6,8 @@ A observer pattern implementation for Unity based on Coroutine.
 - It's handy and clean. I created for work to replace UniRx, check usage below.
 
 # Usage
-`UpdateHub` itself does nothing, it relys on external class (ex: MonoBehaviour) to call its `Update` and `FixedUpdate`.
+`UpdateHub` itself does nothing, it relies on external class (ex: MonoBehaviour) to call its `Update` and `FixedUpdate`.
+`UpdateHub` belonging to other classes is intended for separation of concerns.
 
 ### To get called every **Update**
 ```csharp
