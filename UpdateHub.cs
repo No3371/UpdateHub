@@ -164,5 +164,35 @@ namespace BAStudio.UpdateHub
                 Hub.OnUpdate -= Action;
             }
         }
+        
+        public class IntervalByFixedTime : IDisposable
+        {
+            public UpdateHub Hub { get; protected set; }
+            public Action Action { get; protected set; }
+            float last, interval;
+            public IntervalByFixedTime (UpdateHub hub, float interval, Action action)
+            {
+                Hub = hub;
+                Action = action;
+                hub.OnFixedUpdate += Next;
+                this.interval = interval;
+                this.last = Time.fixedTime;
+            }
+
+            void Next ()
+            {
+                if (last + interval >= Time.fixedTime)
+                {
+                    last = Time.fixedTime;
+                    Action.Invoke();
+                }
+            }
+
+            public void Dispose()
+            {
+                Hub = null;
+                Hub.OnFixedUpdate -= Action;
+            }
+        }
     }
 }
