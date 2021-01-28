@@ -1,5 +1,5 @@
 # UpdateHub
-A observer pattern implementation for Unity based on Coroutine.
+A centralized coroutine implementation for Unity based on Coroutine. Suit for any non-return function that does not rely on update orders.
 
 # Why
 - To reduce individual MonoBehaviour `Update` and coroutines (which are not super fast) by delegate method calls to one single Update (System.Action).
