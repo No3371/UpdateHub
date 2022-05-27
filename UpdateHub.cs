@@ -4,40 +4,26 @@ using UnityEngine;
 
 namespace BAStudio.UpdateHub
 {
-    public class UpdateHub : IDisposable
+    public class UpdateHub : MonoBehaviour
     {
-        public MonoBehaviour Host { get; }
-        Coroutine handle;
-        public UpdateHub(MonoBehaviour host)
-        {
-            Host = host;
-            Host.StartCoroutine(Update());
-        }
         public Action OnUpdate { get; private set; }
         public Action OnFixedUpdate { get; private set; }
-        IEnumerator Update ()
+        void Update ()
         {
-            while (true)
-            {
-                OnUpdate?.Invoke();
-                yield return null;
-            }
+            OnUpdate?.Invoke();
         }
 
-        IEnumerator FixedUpdate ()
+        void FixedUpdate()
         {
-            WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
-            while (true)
-            {
-                OnFixedUpdate?.Invoke();
-                yield return waitForFixedUpdate;
-            }
+            OnFixedUpdate?.Invoke();
         }
 
-        public void Dispose()
-        {
-            Host.StopCoroutine(handle);
-        }
+        public UpdateHandle NewUpdate (Action action) => new UpdateHandle(this, action);
+        public FixedUpdateHandle NewFixedUpdate (Action action) => new FixedUpdateHandle(this, action);
+        public DelayByFrames NewDelayByFrames (int frames, Action action) => new DelayByFrames(this, frames, action);
+        public DelayByFixedTime NewDelayByFixedTime (float delay, Action action) => new DelayByFixedTime(this, delay, action);
+        public RepeatByFrames NewRepeatByFrames (int frames, Action action) => new RepeatByFrames(this, frames, action);
+        public RepeatByFixedTime NewRepeatByFixedTime (float interval, Action action) => new RepeatByFixedTime(this, interval, action);
 
         public class UpdateHandle : IDisposable
         {
@@ -136,12 +122,12 @@ namespace BAStudio.UpdateHub
             }
         }
 
-        public class IntervalByFrames : IDisposable
+        public class RepeatByFrames : IDisposable
         {
             public UpdateHub Hub { get; protected set; }
             public Action Action { get; protected set; }
             int tick, interval;
-            public IntervalByFrames (UpdateHub hub, int frames, Action action)
+            public RepeatByFrames (UpdateHub hub, int frames, Action action)
             {
                 Hub = hub;
                 Action = action;
@@ -165,12 +151,12 @@ namespace BAStudio.UpdateHub
             }
         }
         
-        public class IntervalByFixedTime : IDisposable
+        public class RepeatByFixedTime : IDisposable
         {
             public UpdateHub Hub { get; protected set; }
             public Action Action { get; protected set; }
             float last, interval;
-            public IntervalByFixedTime (UpdateHub hub, float interval, Action action)
+            public RepeatByFixedTime (UpdateHub hub, float interval, Action action)
             {
                 Hub = hub;
                 Action = action;
