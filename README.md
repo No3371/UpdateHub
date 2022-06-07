@@ -1,14 +1,8 @@
 # UpdateHub
-A centralized coroutine implementation for Unity based on Coroutine. Suit for any non-return function that does not rely on update orders.
+Centralized updates for Unity.
 
 # Why
-- To reduce individual MonoBehaviour `Update` and coroutines (which are not super fast) by delegate method calls to one single Update (System.Action).
-- It's handy and clean. I created for work to replace UniRx, check usage below.
-
-# Usage
-`UpdateHub` itself does nothing, it relies on external class (ex: MonoBehaviour) to call its `Update` and `FixedUpdate`.
-
-`UpdateHub` belonging to other classes is intended for separation of concerns. If you want something global/singleton, you can just attach it to a global/singleton.
+- To reduce individual MonoBehaviour `Update`/'FixedUpdate' calls and coroutines (which are not super fast) by delegate method calls.
 
 ### To get called every **Update**
 ```csharp
