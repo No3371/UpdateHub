@@ -2,7 +2,7 @@
 Centralized updates for Unity.
 
 # Why
-- To reduce individual MonoBehaviour `Update`/'FixedUpdate' calls and coroutines (which are not super fast) by delegate method calls.
+To reduce individual MonoBehaviour `Update`/'FixedUpdate' calls and coroutines (which are not super fast) by delegate method calls.
 
 ### To get called every **Update**
 ```csharp
